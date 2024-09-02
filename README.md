@@ -85,16 +85,17 @@ int main() {
 ## OUTPUT:
 Simulating Caesar Cipher
 
-![image](https://github.com/user-attachments/assets/6c4bdf54-3f32-4929-9344-758b95668c96)
+![image](https://github.com/user-attachments/assets/c3658916-ee2f-4656-a88c-98c12a0e92fb)
 
-Input : Anna University
 
-Encrypted Message : Dqqd Xqlyhuvlwb 
+Input : HARINI
 
-Decrypted Message : Anna University
+Encrypted Message : KDULQL
+
+Decrypted Message : HARINI
 
 ## RESULT:
-The program is executed successfully
+The program for caesar cipher method is executed successfully
 
 ---------------------------------
 
@@ -136,7 +137,8 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
 
 
 ## PROGRAM:
-```#include <stdio.h>
+```
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -255,6 +257,25 @@ void encrypt(char str[], char keyT[5][5], int ps) {
     }
 }
 
+// Function for performing the decryption
+void decrypt(char str[], char keyT[5][5], int ps) {
+    int i, a[4];
+
+    for (i = 0; i < ps; i += 2) {
+        search(keyT, str[i], str[i + 1], a);
+        if (a[0] == a[2]) { // Same row
+            str[i] = keyT[a[0]][mod5(a[1] - 1 + 5)];
+            str[i + 1] = keyT[a[2]][mod5(a[3] - 1 + 5)];
+        } else if (a[1] == a[3]) { // Same column
+            str[i] = keyT[mod5(a[0] - 1 + 5)][a[1]];
+            str[i + 1] = keyT[mod5(a[2] - 1 + 5)][a[3]];
+        } else { // Rectangle swap
+            str[i] = keyT[a[0]][a[3]];
+            str[i + 1] = keyT[a[2]][a[1]];
+        }
+    }
+}
+
 // Function to encrypt using Playfair Cipher
 void encryptByPlayfairCipher(char str[], char key[]) {
     int ps, ks;
@@ -275,36 +296,65 @@ void encryptByPlayfairCipher(char str[], char key[]) {
     encrypt(str, keyT, ps);
 }
 
+// Function to decrypt using Playfair Cipher
+void decryptByPlayfairCipher(char str[], char key[]) {
+    int ps, ks;
+    char keyT[5][5];
+
+    // Key
+    ks = strlen(key);
+    ks = removeSpaces(key, ks);
+    toLowerCase(key, ks);
+
+    // Ciphertext
+    ps = strlen(str);
+    toLowerCase(str, ps);
+    ps = removeSpaces(str, ps);
+
+    generateKeyTable(key, ks, keyT);
+    decrypt(str, keyT, ps);
+}
+
 // Driver code
 int main() {
     char str[SIZE], key[SIZE];
+    printf("Simulating Playfair Cipher\n");
 
-    // Key to be encrypted
-    strcpy(key, "Monarchy");
+    // Key to be used
+    strcpy(key, "harin");
     printf("Key text: %s\n", key);
 
     // Plaintext to be encrypted
-    strcpy(str, "instruments");
+    strcpy(str, "saveetha");
     printf("Plain text: %s\n", str);
 
     // Encrypt using Playfair Cipher
     encryptByPlayfairCipher(str, key);
     printf("Cipher text: %s\n", str);
 
+    // Decrypt using Playfair Cipher
+    decryptByPlayfairCipher(str, key);
+    printf("Decrypted text: %s\n", str);
+
     return 0;
 }
 ```
 ## OUTPUT:
-![image](https://github.com/user-attachments/assets/66078609-a094-465f-a68c-9fa12ef7ec35)
 
-Key text: Monarchy 
+![image](https://github.com/user-attachments/assets/70a0691e-2cae-46a7-89fc-cafab608efad)
 
-Plain text: instruments 
 
-Cipher text: gatlmzclrqtx
+
+Key text: harin
+
+Plain text: saveetha
+
+Cipher text: qrybmyar
+
+Decrypted text: saveetha
 
 ## RESULT:
-The program is executed successfully
+The program for playfair cipher method is executed successfully
 
 
 ---------------------------
@@ -392,7 +442,7 @@ int main() {
     char dec[1000] = "";
     int n;
 
-    strcpy(msg, "SecurityLaboratory");
+    strcpy(msg, "HARINI");
     printf("Simulation of Hill Cipher\n");
     printf("Input message: %s\n", msg);
 
@@ -440,18 +490,18 @@ int main() {
 ## OUTPUT:
 Simulating Hill Cipher
 
-![image](https://github.com/user-attachments/assets/e8690947-75ed-41ed-b3fc-2d3ddcf82a1c)
+![image](https://github.com/user-attachments/assets/b414e9d8-c416-47dc-8cef-1a90dba85917)
 
 
-Input Message : SecurityLaboratory
+Input Message : HARINI
 
-Padded Message : SECURITYLABORATORY 
+Padded Message : HARINI
 
-Encrypted Message : EACSDKLCAEFQDUKSXU 
+Encrypted Message : PWYYTQ
 
-Decrypted Message : SECURITYLABORATORY
+Decrypted Message : HARINI
 ## RESULT:
-The program is executed successfully
+The program for hill cipher method is executed successfully
 
 -------------------------------------------------
 
@@ -520,9 +570,10 @@ void vigenereDecrypt(char *text, const char *key) {
 }
 
 int main() {
-    const char *key = "KEY"; // Replace with your desired key
-    char message[] = "This is a secret message."; // Replace with your message
-
+    const char *key = "HARINI"; // Replace with your desired key
+    char message[] = "SAVEETHA ENGINEERING COLLEGE"; // Replace with your message
+    printf("Simulating Vignere cipher\n");
+    
     // Encrypt the message
     vigenereEncrypt(message, key);
     printf("Encrypted Message: %s\n", message);
@@ -539,15 +590,16 @@ int main() {
 
 Simulating Vigenere Cipher
 
-![image](https://github.com/user-attachments/assets/0ec512a9-b582-4546-9949-24e780885edd)
+![image](https://github.com/user-attachments/assets/3e5deae2-d40a-405b-9bd1-4d1c1dff1c0c)
 
-Input Message : SecurityLaboratory
 
-Encrypted Message : NMIYEMKCNIQVVROWXC 
+Input Message : SAVEETHA ENGINEERING COLLEGE
 
-Decrypted Message : SECURITYLABORATORY
+Encrypted Message : ZAMMRBOA MAOPNVMEQUG KBTSEXM
+
+Decrypted Message : SAVEETHA ENGINEERING COLLEGE
 ## RESULT:
-The program is executed successfully
+The program for vignere cipher method is executed successfully
 
 -----------------------------------------------------------------------
 
@@ -580,18 +632,9 @@ In the rail fence cipher, the plaintext is written downwards and diagonally on s
 #include <string.h>
 #include <stdlib.h>
 
-int main() {
-    int i, j, len, rails, count, code[100][1000];
-    char str[1000];
-
-    printf("Enter a Secret Message\n");
-    fgets(str, sizeof(str), stdin); // Use fgets instead of gets
-    str[strcspn(str, "\n")] = 0; // Remove trailing newline character if exists
-
+void encryptRailFence(char str[], int rails, char encrypted[]) {
+    int i, j, len, count, code[100][1000];
     len = strlen(str);
-
-    printf("Enter number of rails\n");
-    scanf("%d", &rails);
 
     // Initialize the code array to 0
     for (i = 0; i < rails; i++) {
@@ -605,27 +648,112 @@ int main() {
     while (j < len) {
         if (count % 2 == 0) { // Moving down the rails
             for (i = 0; i < rails && j < len; i++) {
-                code[i][j] = str[j];
+                code[i][j] = (int)str[j];
                 j++;
             }
         } else { // Moving up the rails
             for (i = rails - 2; i > 0 && j < len; i--) {
-                code[i][j] = str[j];
+                code[i][j] = (int)str[j];
                 j++;
             }
         }
         count++;
     }
 
-    // Print the encrypted message
+    // Construct the encrypted message
+    int pos = 0;
     for (i = 0; i < rails; i++) {
         for (j = 0; j < len; j++) {
             if (code[i][j] != 0) {
-                printf("%c", code[i][j]);
+                encrypted[pos++] = code[i][j];
             }
         }
     }
-    printf("\n");
+    encrypted[pos] = '\0'; // Null-terminate the string
+}
+
+void decryptRailFence(char str[], int rails, char decrypted[]) {
+    int i, j, len, count, code[100][1000], pos = 0;
+    len = strlen(str);
+
+    // Initialize the code array to 0
+    for (i = 0; i < rails; i++) {
+        for (j = 0; j < len; j++) {
+            code[i][j] = 0;
+        }
+    }
+
+    // Mark the positions where characters will go
+    count = 0;
+    j = 0;
+    while (j < len) {
+        if (count % 2 == 0) { // Moving down the rails
+            for (i = 0; i < rails && j < len; i++) {
+                code[i][j] = 1;
+                j++;
+            }
+        } else { // Moving up the rails
+            for (i = rails - 2; i > 0 && j < len; i--) {
+                code[i][j] = 1;
+                j++;
+            }
+        }
+        count++;
+    }
+
+    // Fill the marked positions with the characters from the cipher text
+    for (i = 0; i < rails; i++) {
+        for (j = 0; j < len; j++) {
+            if (code[i][j] == 1) {
+                code[i][j] = str[pos++];
+            }
+        }
+    }
+
+    // Reconstruct the decrypted message by following the zigzag pattern
+    pos = 0;
+    count = 0;
+    j = 0;
+    while (j < len) {
+        if (count % 2 == 0) { // Moving down the rails
+            for (i = 0; i < rails && j < len; i++) {
+                if (code[i][j] != 0) {
+                    decrypted[pos++] = code[i][j];
+                }
+                j++;
+            }
+        } else { // Moving up the rails
+            for (i = rails - 2; i > 0 && j < len; i--) {
+                if (code[i][j] != 0) {
+                    decrypted[pos++] = code[i][j];
+                }
+                j++;
+            }
+        }
+        count++;
+    }
+    decrypted[pos] = '\0'; // Null-terminate the string
+}
+
+int main() {
+    char str[1000], encrypted[1000], decrypted[1000];
+    int rails;
+    printf("Simulating Rail Fence Cipher\n");
+
+    printf("Enter a Secret Message: ");
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = 0; // Remove trailing newline character if exists
+
+    printf("Enter number of rails: ");
+    scanf("%d", &rails);
+
+    // Encrypt the message
+    encryptRailFence(str, rails, encrypted);
+    printf("Encrypted Message: %s\n", encrypted);
+
+    // Decrypt the message
+    decryptRailFence(encrypted, rails, decrypted);
+    printf("Decrypted Message: %s\n", decrypted);
 
     return 0;
 }
@@ -634,12 +762,16 @@ int main() {
 
 Simulating Rail Fence Cipher
 
-![image](https://github.com/user-attachments/assets/3f30630c-1c1a-4574-821a-32428eddef5c)
+![image](https://github.com/user-attachments/assets/08254bf2-9872-4cac-9930-82c5adff1cae)
 
-Enter a Secret Message wearediscovered
 
-Enter number of rails 2
+Enter a Secret Message: HARINI
 
-waeicvrderdsoee
+Enter number of rails: 3
+
+Encrypted message: HNAIIR
+
+Decrypted message: HARINI
+
 ## RESULT:
-The program is executed successfully
+The program for rail fence cipher method is executed successfully
