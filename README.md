@@ -341,6 +341,8 @@ int main() {
 ```
 ## OUTPUT:
 
+Simulating Playfair Cipher
+
 ![image](https://github.com/user-attachments/assets/70a0691e-2cae-46a7-89fc-cafab608efad)
 
 
